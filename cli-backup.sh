@@ -27,7 +27,7 @@ microk8s kubectl create token group01 -n group01
 microk8s kubectl create token group01-token -n group01
 microk8s kubectl delete sa group01 -n group01
 microk8s kubectl describe secret group01
-microk8s kubectl describe secret group01 -u group01
+microk8s kubectl describe secret group01 -n group01
 microk8s kubectl get role,rolebinding -n group01
 microk8s kubectl get sa
 microk8s kubectl get sa -n group01
