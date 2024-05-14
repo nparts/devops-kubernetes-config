@@ -63,13 +63,18 @@ for template in $(find "$template_dir" -maxdepth 1 -name '*-template.yaml'); do
     base_name=$(basename "$template" "-template.yaml")
     # Loop to create RoleBinding files for each group number
     for i in $(seq -w 1 $num_groups); do
-        output_file="${output_dir}${base_name}-group${i}.yaml"
+        if [ $num_groups -lt 10 ]; then
+            formatted_group_number=$(printf "%02d" $i)  # Ensures base 10 is used for formatting
+        else
+            formatted_group_number=$i
+        fi
+        output_file="${output_dir}${base_name}-group${formatted_group_number}.yaml"
         if [[ -f "$output_file" && $force_overwrite != true ]]; then
             echo "File $output_file already exists. Use -f to overwrite."
             continue
         fi
         # Replace placeholders and create the file
-        sed "s/{{ group_number }}/${i}/g" "$template" > "$output_file"
+        sed "s/{{ group_number }}/${formatted_group_number}/g" "$template" > "$output_file"
         echo "Generated $output_file"
     done
 done
