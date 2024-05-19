@@ -42,3 +42,4 @@ microk8s kubectl get serviceaccount
 microk8s kubectl get serviceaccount -n group01
 TOKEN=$(head -c 16 /dev/urandom | base64)
 TOKEN=$(microk8s kubectl -n group01 get secret $(microk8s kubectl -n group01 get sa/group01 -o jsonpath="{.secrets[0].name}") -o jsonpath="{.data.token}" | base64 --decode)
+microk8s kubectl config view --raw | grep certificate-authority-data
